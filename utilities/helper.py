@@ -102,6 +102,10 @@ def clean_spaces(path):
 
 def create_dir(type_dir='train', number_of_samples=1200):
     # WORKING EXAMPLE (training)
+    """
+    Using 'train' in type_dir makes it so it picks number_of_samples from the top of sorted list
+    Using 'test' in your type_dir makes it so it picks number_of_samples from the bottom of sorted list
+    """
     os.mkdir(type_dir)
     for _, i in enumerate(rice_names):
         os.mkdir(os.path.abspath(f'{type_dir}/{i}'))
@@ -126,16 +130,16 @@ def create_dir(type_dir='train', number_of_samples=1200):
 # print('5_test_percent'.__contains__('test'))
 
 # Train 80%
-# create_dir(type_dir='train_80', number_of_samples=1200)
+create_dir(type_dir='train_80', number_of_samples=1200)
 
-# # train 5%
-# create_dir(type_dir='train_5', number_of_samples=750)
+# train 5%
+create_dir(type_dir='train_5', number_of_samples=750)
 
-# # train 5%
-# create_dir(type_dir='train_3', number_of_samples=450)
+# train 5%
+create_dir(type_dir='train_3', number_of_samples=450)
 
-# # Test 20%
-# create_dir(type_dir='test_20', number_of_samples=3000)
+# Test 20%
+create_dir(type_dir='test_20', number_of_samples=3000)
 
 train_list = sorted(os.listdir('train_80/Arborio'))
 test_list = sorted(os.listdir('test_20/Arborio'))
