@@ -6,12 +6,8 @@ from socket import SHUT_RD
 from os import rename
 from pathlib import Path
 
-rice_names = ['Capsicum', 'Radish', 'Pumpkin', 'Cauliflower', 'Potato', 'Bean', 'Cucumber',
-              'Brinjal', 'Cabbage', 'Broccoli', 'Bitter_Gourd', 'Papaya', 'Bottle_Gourd', 'Tomato', 'Carrot']
-directory_path = 'vegetebles/train'
-
-# print(len(os.listdir(directory_path)))
-
+rice_names = ['Arborio', 'Basmati',  'Ipsala',   'Jasmine', 'Karacadag']
+directory_path = 'rice-images'
 
 # RENAME FILES
 # removes all the spaces
@@ -30,10 +26,10 @@ directory_path = 'vegetebles/train'
 # print(os.listdir(f'{directory_path}/{rice_names[0]}'))
 # /Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/rice-images/Arborio/Arborio(1).jpg
 
-target_dir = 'vegetebles/train'
-type_dir = 'test_3_percent'
+target_dir = 'rice_images'
+# type_dir = 'test_five_percent'
 # number_of_samples = 12000  # 80% training
-number_of_samples = 300  # # 5% percent
+number_of_samples = 750  # # 5% percent
 
 
 # for name in rice_names:
@@ -117,11 +113,11 @@ def create_dir(type_dir='train', number_of_samples=1200):
         if(type_dir.__contains__('train')):
             print('type: train')
             list = sorted(os.listdir(
-                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[:number_of_samples]
+                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/rice-images/{i}/'))[:number_of_samples]
         else:
             print('type: test')
             list = sorted(os.listdir(
-                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[-number_of_samples:]
+                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/rice-images/{i}/'))[-number_of_samples:]
         for f in list:
             original_path = Path(os.path.abspath(f'{directory_path}/{i}/{f}'))
             destination = Path(os.path.abspath(f'{type_dir}/{i}'))
@@ -134,38 +130,36 @@ def create_dir(type_dir='train', number_of_samples=1200):
 # print('5_test_percent'.__contains__('test'))
 
 # Train 80%
-# create_dir(type_dir='train_30', number_of_samples=300)
+create_dir(type_dir='train_80', number_of_samples=1200)
 
-# # train 5%
-# create_dir(type_dir='train_5', number_of_samples=750)
+# train 5%
+create_dir(type_dir='train_5', number_of_samples=750)
 
-# # train 5%
-# create_dir(type_dir='train_3', number_of_samples=450)
+# train 5%
+create_dir(type_dir='train_3', number_of_samples=450)
 
-# # Test 20%
-# create_dir(type_dir='test_20', number_of_samples=3000)
+# Test 20%
+create_dir(type_dir='test_20', number_of_samples=3000)
 
-# train_list = sorted(os.listdir('train_80/Arborio'))
-# test_list = sorted(os.listdir('test_20/Arborio'))
-
-
-# def check_dups(dir_1, dir_2):
-
-#     # example: check_dups(os.listdir('test_20/Arborio'), os.listdir('train_80/Arborio'))
-
-#     dir_1 = sorted(dir_1)
-#     dir_2 = sorted(dir_2)
-#     doubles = False
-
-#     for train_el in dir_1:
-#         for test_el in dir_2:
-#             if test_el == train_el:
-#                 print('yes', test_el)
-#                 doubles = True
-
-#     return doubles
+train_list = sorted(os.listdir('train_80/Arborio'))
+test_list = sorted(os.listdir('test_20/Arborio'))
 
 
-# check_dups(os.listdir('test_20/Arborio'), os.listdir('train_80/Arborio'))
+def check_dups(dir_1, dir_2):
 
-print(len(os.listdir(f'train_30/Bean')))
+    # example: check_dups(os.listdir('test_20/Arborio'), os.listdir('train_80/Arborio'))
+
+    dir_1 = sorted(dir_1)
+    dir_2 = sorted(dir_2)
+    doubles = False
+
+    for train_el in dir_1:
+        for test_el in dir_2:
+            if test_el == train_el:
+                print('yes', test_el)
+                doubles = True
+
+    return doubles
+
+
+check_dups(os.listdir('test_20/Arborio'), os.listdir('train_80/Arborio'))
