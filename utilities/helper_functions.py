@@ -186,7 +186,7 @@ def plot_loss_curves(history):
 
     epochs = range(len(history.history['loss']))
 
-    plt.figure(figsize=(10, 15))
+    plt.figure(figsize=(8, 8))
 
     # Plot loss
     plt.subplot(1, 2, 1)
