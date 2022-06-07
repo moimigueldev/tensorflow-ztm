@@ -1,6 +1,7 @@
 # We create a bunch of helpful functions throughout the course.
 # Storing them here so they're easily accessible.
 
+
 from google.colab import drive
 import datetime
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
@@ -366,9 +367,9 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
 
 def mount_kaggle():
     drive.mount('/content/drive')
-    !pip install - q kaggle
+    os.system("pip install - q kaggle")
 
     if './kaggle' not in os.listdir('/root/'):
-        !mkdir ~/.kaggle
-        !cp / content/drive/MyDrive/deep-learning/kaggle.json ~/.kaggle/
-        !chmod 600 ~/.kaggle/kaggle.json
+        os.system('mkdir ~/.kaggle')
+        os.system('cp / content/drive/MyDrive/deep-learning/kaggle.json ~/.kaggle/')
+        os.system('!chmod 600 ~/.kaggle/kaggle.json')
