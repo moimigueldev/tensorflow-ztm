@@ -371,5 +371,5 @@ def mount_kaggle():
 
     if './kaggle' not in os.listdir('/root/'):
         os.system('mkdir ~/.kaggle')
-        os.system('cp / content/drive/MyDrive/deep-learning/kaggle.json ~/.kaggle/')
+        os.system('cp /content/drive/MyDrive/deep-learning/kaggle.json ~/.kaggle/')
         os.system('!chmod 600 ~/.kaggle/kaggle.json')
