@@ -50,11 +50,11 @@ def create_dir(type_dir='train', number_of_samples=1200):
         if(type_dir.__contains__('train')):
             print('type: train')
             list = sorted(os.listdir(
-                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[:number_of_samples]
+                f'{directory_path}/{i}/'))[:number_of_samples]
         else:
             print('type: test')
             list = sorted(os.listdir(
-                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[-number_of_samples:]
+                f'{directory_path}/{i}/'))[-number_of_samples:]
         for f in list:
             original_path = Path(os.path.abspath(f'{directory_path}/{i}/{f}'))
             destination = Path(os.path.abspath(f'{type_dir}/{i}'))
