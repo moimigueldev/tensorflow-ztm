@@ -1,6 +1,7 @@
 # We create a bunch of helpful functions throughout the course.
 # Storing them here so they're easily accessible.
 
+from google.colab import drive
 import datetime
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import os
@@ -10,6 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 import tensorflow as tf
+import shutil
+from pathlib import Path
 
 # Create a function to import an image and resize it to be able to be used with our model
 
@@ -186,10 +189,7 @@ def plot_loss_curves(history):
 
     epochs = range(len(history.history['loss']))
 
-    plt.figure(figsize=(8, 8))
-
     # Plot loss
-    plt.subplot(1, 2, 1)
     plt.plot(epochs, loss, label='training_loss')
     plt.plot(epochs, val_loss, label='val_loss')
     plt.title('Loss')
@@ -197,16 +197,15 @@ def plot_loss_curves(history):
     plt.legend()
 
     # Plot accuracy
-    plt.subplot(1, 2, 2)
+    plt.figure()
     plt.plot(epochs, accuracy, label='training_accuracy')
     plt.plot(epochs, val_accuracy, label='val_accuracy')
     plt.title('Accuracy')
     plt.xlabel('Epochs')
     plt.legend()
-    plt.show()
 
 
-def compare_histories(original_history, new_history, initial_epochs=5):
+def compare_historys(original_history, new_history, initial_epochs=5):
     """
     Compares two TensorFlow model History objects.
 
@@ -291,7 +290,6 @@ def walk_through_dir(dir_path):
 
 # Function to evaluate: accuracy, precision, recall, f1-score
 
-
 def calculate_results(y_true, y_pred):
     """
     Calculates model accuracy, precision, recall and f1 score of a binary classification model.
@@ -312,3 +310,65 @@ def calculate_results(y_true, y_pred):
                      "recall": model_recall,
                      "f1": model_f1}
     return model_results
+
+
+def check_dups(dir_1, dir_2):
+    dir_1 = sorted(dir_1)
+    dir_2 = sorted(dir_2)
+    doubles = False
+
+    for train_el in dir_1:
+        for test_el in dir_2:
+            if test_el == train_el:
+                print('yes', test_el)
+                doubles = True
+
+    return doubles
+
+
+def clean_spaces(path):
+    """
+    Walks through all directories within the provided path. 
+    Goes through each file and removes spaces in file names.
+    """
+
+    paths = (os.path.join(root, filename)
+             for root, _, filenames in os.walk(path)
+             for filename in filenames)
+
+    for path in paths:
+        os.rename(path, path.replace(' ', ''))
+
+
+def create_dir(type_dir, number_of_samples, directory_path, class_names):
+    # WORKING EXAMPLE (training)
+    """
+    Using 'train' in type_dir makes it so it picks number_of_samples from the top of sorted list
+    Using 'test' in your type_dir makes it so it picks number_of_samples from the bottom of sorted list
+    """
+    os.mkdir(type_dir)
+    for _, i in enumerate(class_names):
+        os.mkdir(os.path.abspath(f'{type_dir}/{i}'))
+
+        if(type_dir.__contains__('train')):
+            print('type: train')
+            list = sorted(os.listdir(
+                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[:number_of_samples]
+        else:
+            print('type: test')
+            list = sorted(os.listdir(
+                f'/Users/moisesmiguel/code/ml/tensorflow-ztm/utilities/{directory_path}/{i}/'))[-number_of_samples:]
+        for f in list:
+            original_path = Path(os.path.abspath(f'{directory_path}/{i}/{f}'))
+            destination = Path(os.path.abspath(f'{type_dir}/{i}'))
+            shutil.copy(original_path, destination)
+
+
+def mount_kaggle():
+    drive.mount('/content/drive')
+    !pip install - q kaggle
+
+    if './kaggle' not in os.listdir('/root/'):
+        !mkdir ~/.kaggle
+        !cp / content/drive/MyDrive/deep-learning/kaggle.json ~/.kaggle/
+        !chmod 600 ~/.kaggle/kaggle.json
