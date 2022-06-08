@@ -348,7 +348,7 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
     Using 'test' in your type_dir makes it so it picks number_of_samples from the bottom of sorted list
     """
     if type_dir in os.listdir('.'):
-        os.remove(type_dir)
+        os.system(f'rm -r {type_dir}')
     os.mkdir(type_dir)
     for _, i in enumerate(class_names):
 
