@@ -347,10 +347,11 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
     Using 'train' in type_dir makes it so it picks number_of_samples from the top of sorted list
     Using 'test' in your type_dir makes it so it picks number_of_samples from the bottom of sorted list
     """
+    if type_dir in os.listdir('.'):
+        os.remove(type_dir)
     os.mkdir(type_dir)
     for _, i in enumerate(class_names):
-        if type_dir in os.listdir('.'):
-            os.remove(type_dir)
+
         os.mkdir(os.path.abspath(f'{type_dir}/{i}'))
 
         if(type_dir.__contains__('train')):
