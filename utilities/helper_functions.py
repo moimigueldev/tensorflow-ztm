@@ -349,6 +349,8 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
     """
     os.mkdir(type_dir)
     for _, i in enumerate(class_names):
+        if type_dir in os.listdir('.'):
+            os.remove(type_dir)
         os.mkdir(os.path.abspath(f'{type_dir}/{i}'))
 
         if(type_dir.__contains__('train')):
