@@ -369,6 +369,11 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
 
 
 def mount_kaggle():
+    """
+    Will mount google drive if it's not mounted yet 
+    and will install kaggle CLI to be able to download kaggle datasets
+    """
+
     drive.mount('/content/drive')
     os.system("pip install - q kaggle")
 
