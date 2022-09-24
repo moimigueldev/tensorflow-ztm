@@ -2,7 +2,6 @@
 # Storing them here so they're easily accessible.
 
 
-from google.colab import files
 from google.colab import drive
 import datetime
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
@@ -348,11 +347,8 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
     Using 'train' in type_dir makes it so it picks number_of_samples from the top of sorted list
     Using 'test' in your type_dir makes it so it picks number_of_samples from the bottom of sorted list
     """
-    if type_dir in os.listdir('.'):
-        os.system(f'rm -r {type_dir}')
     os.mkdir(type_dir)
     for _, i in enumerate(class_names):
-
         os.mkdir(os.path.abspath(f'{type_dir}/{i}'))
 
         if(type_dir.__contains__('train')):
@@ -370,11 +366,6 @@ def create_dir(type_dir, number_of_samples, directory_path, class_names):
 
 
 def mount_kaggle():
-    """
-    Will mount google drive if it's not mounted yet 
-    and will install kaggle CLI to be able to download kaggle datasets
-    """
-
     drive.mount('/content/drive')
     os.system("pip install - q kaggle")
 
@@ -383,8 +374,3 @@ def mount_kaggle():
         os.system(
             'cp /content/drive/MyDrive/deep-learning/kaggle/kaggle.json ~/.kaggle/')
         os.system('!chmod 600 ~/.kaggle/kaggle.json')
-
-
-def zip_dir(zip_name, src):
-    os.system(f'zip -r {zip_name} {src}')
-    files.download(zip_name)
