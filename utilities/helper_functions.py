@@ -388,3 +388,13 @@ def mount_kaggle():
 def zip_dir(zip_name, src):
     os.system(f'zip -r {zip_name} {src}')
     files.download(zip_name)
+
+
+def wget_get(src, name):
+
+    os_list = os.listdir()
+
+    if name in os_list:
+        return False
+    else:
+        os.system(f'wget {src}')
