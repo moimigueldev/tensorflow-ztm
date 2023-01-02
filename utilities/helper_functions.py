@@ -15,6 +15,8 @@ import itertools
 import tensorflow as tf
 import shutil
 from pathlib import Path
+from shutil import move
+from pathlib import Path
 
 # Create a function to import an image and resize it to be able to be used with our model
 
@@ -328,18 +330,23 @@ def check_dups(dir_1, dir_2):
     return doubles
 
 
-def clean_spaces(path):
-    """
-    Walks through all directories within the provided path. 
-    Goes through each file and removes spaces in file names.
-    """
 
-    paths = (os.path.join(root, filename)
-             for root, _, filenames in os.walk(path)
-             for filename in filenames)
+def clean_spaces(src):
+  """
+  Walks through all directories within the provided path. 
+  Goes through each file and removes spaces in file names.
+  """
 
-    for path in paths:
-        os.rename(path, path.replace(' ', ''))
+  base_path = Path(src)
+
+  for folder in base_path.iterdir():
+      if not folder.is_dir() or folder.name.startswith("."):
+          continue
+
+      name = folder.name
+      new_name = folder.name.replace(' ', '_')
+      new_folder = folder.parent / new_name
+      move(str(folder), str(new_folder))
 
 
 def create_dir(type_dir, number_of_samples, directory_path, class_names):
